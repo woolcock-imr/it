@@ -5,16 +5,17 @@
     function F__ID(){
         //-------------------------------------
         VmInclude:__COMPONENT__/grid/grid.v3.js
-        //-------------------------------------
-        _fields="_Form,Name,Source_Code,Web_Address,Description,Contact Person";
+		_json='';
+		//-------------------------------------
+		_fields="_Form,Title,_gridHidden|Description,_gridHidden|Document,Requester,Comments,Status";
         _fields+=",Submit Date|DateTime,Submitted by|Author,_Delete,_Hidden|Participant_uid";
         //-------------------------------------
         $('#D__ID').on('load',function(){  _set_req(); _request_data(); })
         //-------------------------------------
 		_cell_render=function(records,I,field,td,set_value,source){
 			switch(field){
-				case 'Source_Code':
-				case 'Web_Address':
+				/*
+				case 'Title':
 					if(records[I].UID==null || records[I].UID==undefined) return;
 					if(source=='form'){
 						records[I].vm_readonly[field]=false;
@@ -22,8 +23,16 @@
 					}
 					records[I].vm_readonly[field]=true;
 					var nm=$('<div/>').html(records[I][field]).text();
-					td.html("<u><a style='color:black' target=_blank href="+nm+">"+nm+"</a></u>");
+					td.html("<u style='cursor:pointer;'>"+nm+"</u>");
+					td.find('u').on('click',function(){
+						var form=td.parent().find('td').eq(1).find('u:first');
+	                    form.triggerHandler('click');
+					})
 					break;
+				*/
+			    case 'Document':
+			        VmInclude:__COMPONENT__/grid/field_file.js
+			    	break;
 			}
 		}
 		//-------------------------------------
@@ -31,4 +40,7 @@
 </script>
 <style>
     VmInclude:__COMPONENT__/grid/grid.v3.css
+	#grid_form__ID table td{
+		white-space: normal!Important;
+	}
 </style>
